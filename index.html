@@ -3,10 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Word Scramble</title>
 </head>
 <body>
-    
+    <div class="container">
+        <h2>Word Scramble</h2>
+        <div class="content">
+           <p class="word">1234567890</p>
+           <div class="details">
+            <p class="hint">Hint: <span>Testing here</span> </p>
+            <p class="time">Time Left: <span><b>30</b>s</span> </p>
+           </div>
+           <input type="text" placeholder="Enter a valid word">
+           <div class="buttons">
+                <button class="refresh-word">Refresh Word</button>
+                
+                <button class="check-word">Check Word</button>
+           </div>
+        </div>
+    </div>
 </body>
 <script type="text/javascript" src="./js/app.js"></script>
 </html>

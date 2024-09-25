@@ -64,3 +64,28 @@ const words = [
         hint: "A programming language commonly used to create interactive effects within web browsers."
     }
 ]
+
+const wordText = document.querySelector(".word");
+const hintText = document.querySelector(".hint span");
+
+const initGame = () => {
+    // getting random object from words
+    let randomObj = words[Math.floor(Math.random() * words.length)];
+    // splitting each letter of random word
+    let wordArray = randomObj.word.split("");
+    for (let i = wordArray.length - 1; i > 0; i--) {
+        // getting random number
+        let j = Math.floor(Math.random() * (i + 1));
+        //Shuffling and swiping wordArray letters randomly
+        let temp = wordArray[i];
+        wordArray[i] = wordArray[j];
+        wordArray[j] = temp;
+    }
+    // passing shuffled word as word text
+    wordText.innerText = wordArray.join("");
+    // passing random object hint as hint text
+    hintText.innerText = randomObj.hint;
+    console.log(wordArray, randomObj.word);
+}
+
+initGame();

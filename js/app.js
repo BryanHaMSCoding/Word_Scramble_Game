@@ -67,8 +67,49 @@ const words = [
 
 const wordText = document.querySelector(".word");
 const hintText = document.querySelector(".hint span");
+const timeText = document.querySelector(".time b");
+const inputField = document.querySelector("input");
+const refreshButton = document.querySelector(".refresh-word");
+const checkButton = document.querySelector(".check-word");
+const messageDiv = document.querySelector(".message");
+const scoreboard = document.querySelector(".scoreboard");
+const scoreText = document.querySelector(".score-text");
+
+
+let correctWord;
+let timer;
+let currentScore = 0;
+
+const initTimer = maxTime => {
+    //clear any existing timer
+    clearInterval(timer);
+    timer = setInterval(() => {
+        // changes color to indicate time is running out
+        if (maxTime > 6) {
+            timeText.style.color = "black";
+        }else {
+            timeText.style.color = "red";
+        }//end if else
+        
+        if (maxTime > 0) {
+            maxTime--;
+            timeText.innerText = maxTime;
+            return;
+        }//end if
+
+        // time's up, stop timer and notify player
+        clearInterval(timer);
+        messageDiv.textContent = `Time's Up! ${correctWord.toUpperCase()} was the correct word!`;
+        messageDiv.className = "message error";
+
+        // restart game after 2.5 sec delay
+        setTimeout(initGame, 2500);
+    }, 1000);
+}//end function
 
 const initGame = () => {
+    // calling initTimer function with passing 30 as maxTime value
+    initTimer(31);
     // getting random object from words
     let randomObj = words[Math.floor(Math.random() * words.length)];
     // splitting each letter of random word
@@ -80,12 +121,67 @@ const initGame = () => {
         let temp = wordArray[i];
         wordArray[i] = wordArray[j];
         wordArray[j] = temp;
-    }
+    }//end for loop
+
     // passing shuffled word as word text
     wordText.innerText = wordArray.join("");
+    
     // passing random object hint as hint text
     hintText.innerText = randomObj.hint;
-    console.log(wordArray, randomObj.word);
-}
+    
+    //passing random word to correctWord
+    correctWord = randomObj.word.toLowerCase();
+    
+    //making input field empty
+    inputField.value = "";
+    
+    //setting input maxLength attribute value to word length
+    inputField.setAttribute("maxLength", correctWord.length);
+    
+    messageDiv.textContent = "";
+    
+    messageDiv.className = "message";
+    
+    checkButton.disabled = true;
+    
+    timeText.style.color = "black";
+}//end function
+
+
+const checkWord = () => {
+    // getting user value
+    let userWord = inputField.value.toLowerCase();
+    
+    if (!userWord) {
+        messageDiv.textContent = "Please enter a word to check";
+        messageDiv.className = "message error";
+        return;
+    }//end if
+
+    if (userWord !== correctWord) {
+        messageDiv.textContent = `Try Again! ${userWord.toUpperCase()} is not the correct word!`;
+        messageDiv.className = "message error";
+    }else {
+        currentScore += 1;
+        scoreText.innerText = currentScore;
+
+        messageDiv.textContent = `Congrats! ${userWord.toUpperCase()} is the correct word!`;
+        messageDiv.className = "message success";
+        setTimeout(initGame, 2500);
+    }//end if else
+
+}//end function
+
+refreshButton.addEventListener("click", initGame);
+checkButton.addEventListener("click", checkWord);
+inputField.addEventListener("input", () => {
+    checkButton.disabled = inputField.value.trim() === "";
+});
+
+inputField.addEventListener("keypress", (e) => {
+    if (e.key === "Enter" && !checkButton.disabled) {
+        checkWord();
+    }
+});
 
 initGame();

@@ -11,17 +11,20 @@
     <div class="container">
         <h2>Word Scramble</h2>
         <div class="content">
+           <div class="scoreboard">
+                Score: <span class="score-text">0</span>
+           </div>
            <p class="word"></p>
            <div class="details">
             <p class="hint">Hint: <span>A programming language commonly used to create interactive effects within web browsers.</span> </p>
-            <p class="time">Time Left: <span><b>30</b>s</span> </p>
+            <p class="time">Time Left: <span><b>30</b></span> </p>
            </div>
-           <input type="text" placeholder="Enter a valid word">
+           <input type="text" maxlength="10" aria-label="Enter your guess" placeholder="Enter a valid word">
            <div class="buttons">
-                <button class="refresh-word">Refresh Word</button>
-                
-                <button class="check-word">Check Word</button>
+                <button class="refresh-word" aria-label="Refresh the Word">Refresh Word</button>
+                <button class="check-word" aria-label="Check your Word" disabled>Check Word</button>
            </div>
+           <div class="message"></div>
         </div>
     </div>
 </body>

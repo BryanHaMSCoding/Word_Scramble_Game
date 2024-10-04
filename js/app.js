@@ -75,15 +75,10 @@ const messageDiv = document.querySelector(".message");
 const scoreboard = document.querySelector(".scoreboard");
 const scoreText = document.querySelector(".score-text");
 
-let shuffledWords = [];
-let currentIndex = 0;
+
 let correctWord;
 let timer;
 let currentScore = 0;
-
-const shuffleArray = (Array) => {
-    
-}
 
 const initTimer = maxTime => {
     //clear any existing timer
@@ -157,11 +152,11 @@ const checkWord = () => {
     // getting user value
     let userWord = inputField.value.toLowerCase();
     
-    // if (!userWord) {
-    //     messageDiv.textContent = "Please enter a word to check";
-    //     messageDiv.className = "message error";
-    //     return;
-    // }//end if
+    if (!userWord) {
+        messageDiv.textContent = "Please enter a word to check";
+        messageDiv.className = "message error";
+        return;
+    }//end if
 
     if (userWord !== correctWord) {
         messageDiv.textContent = `Try Again! ${userWord.toUpperCase()} is not the correct word!`;
@@ -177,7 +172,7 @@ const checkWord = () => {
 
 }//end function
 
-refreshButton.addEventListener("click", initGame); 
+refreshButton.addEventListener("click", initGame);
 checkButton.addEventListener("click", checkWord);
 inputField.addEventListener("input", () => {
     checkButton.disabled = inputField.value.trim() === "";

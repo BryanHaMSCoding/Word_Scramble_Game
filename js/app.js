@@ -108,34 +108,24 @@ const initTimer = maxTime => {
 }//end function
 
 const initGame = () => {
-    // calling initTimer function with passing 30 as maxTime value
     initTimer(31);
-    // getting random object from words
     let randomObj = words[Math.floor(Math.random() * words.length)];
-    // splitting each letter of random word
     let wordArray = randomObj.word.split("");
     for (let i = wordArray.length - 1; i > 0; i--) {
-        // getting random number
         let j = Math.floor(Math.random() * (i + 1));
-        //Shuffling and swiping wordArray letters randomly
         let temp = wordArray[i];
         wordArray[i] = wordArray[j];
         wordArray[j] = temp;
     }//end for loop
 
-    // passing shuffled word as word text
     wordText.innerText = wordArray.join("");
     
-    // passing random object hint as hint text
     hintText.innerText = randomObj.hint;
     
-    //passing random word to correctWord
     correctWord = randomObj.word.toLowerCase();
     
-    //making input field empty
     inputField.value = "";
     
-    //setting input maxLength attribute value to word length
     inputField.setAttribute("maxLength", correctWord.length);
     
     messageDiv.textContent = "";
